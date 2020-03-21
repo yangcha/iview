@@ -33,10 +33,23 @@ var ctx = cvs.getContext('2d');
 var res = document.getElementById('results');
 
 cvs.addEventListener('mousemove', mousePos, false);
+cvs.addEventListener('click', copyMousePos, false);
 
 window.onload = function() {
 	var inputImage = document.getElementById('inputImage');
 	inputImage.addEventListener('change', handleImageFiles, false);
+}
+
+function copyMousePos(evt) {
+	var rect = cvs.getBoundingClientRect();
+	var x = parseInt(evt.clientX - rect.left);
+	var y = parseInt(evt.clientY - rect.top);
+	copyText = x+';'+y
+	navigator.clipboard.writeText(copyText).then(function() {
+	  console.log('ok')
+	}, function() {
+	  console.log('ko')
+	});
 }
 
 function mousePos(evt) {
