@@ -41,6 +41,10 @@ cvs.addEventListener('click', copyMousePos, false);
 window.onload = function() {
 	var inputImage = document.getElementById('inputImage');
 	inputImage.addEventListener('change', handleImageFiles, false);
+	window.addEventListener('paste', e => {
+		inputImage.files = e.clipboardData.files
+		handleImageFiles()
+        },false)
 }
 
 function copyMousePos(evt) {
@@ -79,8 +83,8 @@ var grayscale = function() {
     	ctx.putImageData(imageData, 0, 0);
 };
 	
-function handleImageFiles(e) {	
-	var url = URL.createObjectURL(e.target.files[0]);
+function handleImageFiles() {	
+	var url = URL.createObjectURL(inputImage.files[0]);
 	var img = new Image();
 	img.onload = function() {
 		cvs.width = img.width;
