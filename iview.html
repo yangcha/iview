@@ -20,7 +20,10 @@ div.footer {
 
 <body>
 
-<p>Open image: <input type="file" id="inputImage"/></p>
+<p>
+Open image: <input type="file" id="inputImage"/>	
+<button onclick="grayscale()">Grayscale</button>
+</p>
 
 <canvas id="canvas" style="margin:12px;"></canvas>
 
@@ -63,7 +66,19 @@ function mousePos(evt) {
 		+ p[2] + '</td><td>Alpha: ' + p[3]+"</td></table>";
 	return {x, y};
 }
-
+	
+var grayscale = function() {
+    	var imageData= ctx.getImageData(0, 0, cvs.width, cvs.height)
+    	var data= imageData.data
+    	for (var i = 0; i < data.length; i += 4) {
+	      var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+	      data[i]     = avg; // red
+	      data[i + 1] = avg; // green
+	      data[i + 2] = avg; // blue
+    	}
+    	ctx.putImageData(imageData, 0, 0);
+};
+	
 function handleImageFiles(e) {	
 	var url = URL.createObjectURL(e.target.files[0]);
 	var img = new Image();
